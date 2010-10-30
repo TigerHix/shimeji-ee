@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="Windows-31J" ?>
+<project name="Shimeji-ee" basedir="." default="zip">
+
+	<property name="version" value="1.0.0" />
+
+	<target name="clean">
+		<delete dir="target" />
+		<mkdir dir="target"/>
+	</target>
+
+	<target name="compile" depends="clean">
+		<mkdir dir="target/classes" />
+		<javac destdir="target/classes" target="6" debug="yes" optimize="yes">
+			<src path="src"/>
+			<src path="src_win"/>
+			<src path="src_generic"/>
+			<classpath>
+				<fileset dir="lib" />
+			</classpath>
+		</javac>
+	</target>
+
+	<target name="jar" depends="compile">
+		<jar destfile="target/Shimeji-ee.jar" basedir="target/classes" manifest="MANIFEST.MF" />
+	</target>
+
+	<target name="zip" depends="jar">
+		<zip destfile="target/src.zip">
+			<fileset dir=".">
+				<include name="**/*" />
+				<exclude name="target/**/*" />
+				<exclude name="target" />
+				<exclude name=".settings/**" />
+				<exclude name=".settings" />
+				<exclude name=".classpath" />
+				<exclude name=".project" />
+			</fileset>
+		</zip>
+
+		<ant target="zip_package">
+			<property name="edition" value="Personal" />
+		</ant>
+		<ant target="zip_package">
+			<property name="edition" value="Professional" />
+		</ant>
+		<ant target="zip_package">
+			<property name="edition" value="Ultimate" />
+		</ant>
+	</target>
+
+	<target name="zip_package">
+
+		<mkdir dir="target/${edition}/conf" />
+		<copy tofile="target/${edition}/conf/behaviors.xml"
+			file="conf/${edition}Behavior.xml" />
+
+		<zip destfile="target/Shimeji-ee_${version}_${edition}.zip">
+			<fileset dir="target">
+				<include name="Shimeji-ee.jar" />
+				<include name="src.zip" />
+			</fileset>
+			<fileset dir="target/${edition}">
+				<include name="conf/**/*" />
+			</fileset>
+			<fileset dir=".">
+				<include name="Shimeji-ee.exe"/>
+				<include name="ShimejiHomePage.url"/>
+				<include name="Shimeji-eeHomePage.url"/>
+				<include name="originallicense.txt"/>
+				<include name="originalreadme.txt"/>
+				<include name="img/**/*" />
+				<include name="conf/**/*" />
+				<exclude name="conf/behaviors.xml" />
+				<exclude name="conf/*Behavior.xml" />
+				<include name="lib/*" />
+			</fileset>
+		</zip>
+	</target>
+</project>

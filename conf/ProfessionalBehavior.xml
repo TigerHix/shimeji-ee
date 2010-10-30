@@ -1,0 +1,174 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<Mascot xmlns="http://www.group-finity.com/Mascot" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.group-finity.com/Mascot Mascot.xsd">
+
+	<BehaviorList>
+	
+		<!-- System -->
+		<Behavior Name="GatherAroundMouse" Frequency="0">
+			<NextBehavior Add="false">
+				<BehaviorReference Name="SitAndStareAtMouse" Frequency="1" />
+			</NextBehavior>
+		</Behavior>
+		
+		<Behavior Name="SitAndStareAtMouse" Frequency="0">
+			<NextBehavior Add="false">
+				<BehaviorReference Name="SitAndStareAtMouse" Frequency="100" />
+				<BehaviorReference Name="SitAndSpinHeadAtMouse" Frequency="1" />
+				<BehaviorReference Name="SitAtBottom" Frequency="1" />
+			</NextBehavior>
+		</Behavior>
+		
+		<Behavior Name="SitAndSpinHeadAtMouse" Frequency="0">
+			<NextBehavior Add="false">
+				<BehaviorReference Name="SitAndStareAtMouse" Frequency="1" />
+			</NextBehavior>
+		</Behavior>
+		
+		<!-- System -->
+		<Behavior Name="Fall" Frequency="0" />
+		
+		<!-- System -->
+		<Behavior Name="Dragged" Frequency="0" />
+		
+		<!-- System -->
+		<Behavior Name="Thrown" Frequency="0" />
+		
+		<Behavior Name="PullUp" Frequency="0" />
+		<Behavior Name="Divided" Frequency="0" />
+
+		<!-- Facing the Floor -->
+		<Condition Condition="#{mascot.environment.floor.isOn(mascot.anchor) || mascot.environment.activeIE.topBorder.isOn(mascot.anchor)}">
+			<Behavior Name="StandSigh" Frequency="200" />
+			<Behavior Name="SitSigh" Frequency="200">
+				<NextBehavior Add="true">
+					<BehaviorReference Name="SitAtBottom" Frequency="100" />
+					<BehaviorReference Name="LieSigh" Frequency="100" />
+				</NextBehavior>
+			</Behavior>
+			<Behavior Name="SitAtBottom" Frequency="0" />
+			<Behavior Name="LieSigh" Frequency="0">
+				<NextBehavior Add="false">
+					<BehaviorReference Name="SitSigh" Frequency="100" />
+					<BehaviorReference Name="IeCeilingCrawl" Frequency="100" Condition="${mascot.environment.activeIE.topBorder.isOn(mascot.anchor)}" />
+					<BehaviorReference Name="WorkAreaBottomCrawl" Frequency="100" Condition="${mascot.environment.floor.isOn(mascot.anchor)}" />
+				</NextBehavior>
+			</Behavior>
+			
+			<Behavior Name="Disrupted" Frequency="0" Condition="#{mascot.totalCount &lt; 10}" />
+		</Condition>
+
+		<!-- Facing the Wall -->
+		<Condition Condition="#{ mascot.lookRight ? (
+					mascot.environment.workArea.rightBorder.isOn(mascot.anchor) || 
+					mascot.environment.activeIE.leftBorder.isOn(mascot.anchor) ) : (
+					mascot.environment.workArea.leftBorder.isOn(mascot.anchor) || 
+					mascot.environment.activeIE.rightBorder.isOn(mascot.anchor) ) }">
+			<Behavior Name="WallGrabSigh" Frequency="100" />
+			<Behavior Name="FallFromWall" Frequency="50" Condition="${!mascot.environment.floor.isOn(mascot.anchor)}" />
+		</Condition>
+		
+		<!-- Facing the Ceiling -->
+		<Condition Condition="#{mascot.environment.ceiling.isOn(mascot.anchor) || mascot.environment.activeIE.bottomBorder.isOn(mascot.anchor)}">
+			<Behavior Name="GrabCeilingSigh" Frequency="100" />
+			<Behavior Name="FallFromCeiling" Frequency="50" />
+		</Condition>
+		
+		<!-- Facing the Work Area Bottom -->
+		<Condition Condition="#{mascot.environment.floor.isOn(mascot.anchor)}">
+			<Behavior Name="WorkAreaBottomWalk" Frequency="200" />
+			<Behavior Name="WorkAreaBottomRun" Frequency="0" />
+			<Behavior Name="WorkAreaBottomCrawl" Frequency="10">
+				<NextBehavior Add="false">
+					<!-- Finished Crawling -->
+					<BehaviorReference Name="LieSigh" Frequency="1" />
+				</NextBehavior>
+			</Behavior>
+			<Behavior Name="WorkAreaBottomLeftSit" Frequency="100" />
+			<Behavior Name="WorkAreaBottomRightSit" Frequency="100" />
+			<Behavior Name="WorkAreaBottomLeftWallSteal" Frequency="100" />
+			<Behavior Name="WorkAreaBottomRightWallSteal" Frequency="100" />
+			<Behavior Name="WalkWorkAreaBottomLeftSit" Frequency="0" />
+			<Behavior Name="WalkWorkAreaBottomRightSit" Frequency="0" />
+			<Behavior Name="WalkWorkAreaBottomLeftWallSteal" Frequency="0" />
+			<Behavior Name="WalkWorkAreaBottomRightWallSteal" Frequency="0" />
+			<Behavior Name="IeBottomJump" Frequency="50" Condition="#{mascot.anchor.x &gt;= mascot.environment.activeIE.left &amp;&amp;
+				mascot.anchor.x &lt; mascot.environment.activeIE.right}" />
+				
+			<Behavior Name="Unplug" Frequency="50" Condition="#{mascot.totalCount &lt; 10}" />
+		</Condition>
+		
+		<!-- Work Area Facing the Wall -->
+		<Condition Condition="#{mascot.lookRight ? mascot.environment.workArea.rightBorder.isOn(mascot.anchor) :
+					mascot.environment.workArea.leftBorder.isOn(mascot.anchor)}">
+			<Behavior Name="WorkAreaWallClimbHalfway" Frequency="100" />
+			<Behavior Name="WorkAreaWallClimb" Frequency="100" />
+		</Condition>
+		
+		<!-- Work Area Top Facing -->
+		<Condition Condition="#{mascot.environment.ceiling.isOn(mascot.anchor)}">
+			<Behavior Name="WorkAreaTopGoAlong" Frequency="100" />
+		</Condition>
+		
+		<!-- IE Top Facing -->
+		<Condition Condition="#{mascot.environment.activeIE.topBorder.isOn(mascot.anchor)}">
+			<Behavior Name="IeCeilingWalk" Frequency="200" />
+			<Behavior Name="IeCeilingRun" Frequency="0" />
+			<Behavior Name="IeCeilingCrawl" Frequency="10">
+				<NextBehavior Add="false">
+					<!-- Finished Crawling -->
+					<BehaviorReference Name="LieSigh" Frequency="1" />
+				</NextBehavior>
+			</Behavior>
+			<Behavior Name="IeCeilingLeftEdgeSit" Frequency="100" />
+			<Behavior Name="IeCeilingRightEdgeSit" Frequency="100" />
+			<Behavior Name="IeJumpFromLeftEdge" Frequency="100" />
+			<Behavior Name="IeJumpFromRightEdge" Frequency="100" />
+			<Behavior Name="IeWalkCeilingLeftEdgeSit" Frequency="0" />
+			<Behavior Name="IeWalkCeilingRightEdgeSit" Frequency="0" />
+			<Behavior Name="IeWalkCeilingJumpFromLeftEdge" Frequency="0" />
+			<Behavior Name="IeWalkCeilingJumpFromRightEdge" Frequency="0" />
+		</Condition>
+		
+		<!-- IE Facing the Wall -->
+		<Condition Condition="#{mascot.lookRight ? mascot.environment.activeIE.leftBorder.isOn(mascot.anchor) :
+					mascot.environment.activeIE.rightBorder.isOn(mascot.anchor)}">
+			<Behavior Name="IeWallClimbHalfway" Frequency="100" />
+			<Behavior Name="IeWallClimb" Frequency="100" />
+			
+		</Condition>
+
+		<!-- IE Facing Bottom -->
+		<Condition Condition="#{mascot.environment.activeIE.bottomBorder.isOn(mascot.anchor)}">
+			<Behavior Name="IeFollowBottom" Frequency="100" />
+			<Behavior Name="IeBottomLeftWallSteal" Frequency="100" />
+			<Behavior Name="IeBottomRightWallSteal" Frequency="100" />
+		</Condition>
+		
+		<Behavior Name="JumpFromLeftWall" Frequency="50" Condition="#{!mascot.environment.workArea.leftBorder.isOn(mascot.anchor) &amp;&amp;
+			mascot.anchor.x &lt; mascot.environment.workArea.left+400 &amp;&amp;
+			Math.abs(mascot.environment.workArea.bottom-mascot.anchor.y) &lt;mascot.environment.workArea.height/4}" />
+		<Behavior Name="JumpFromRightWall" Frequency="50" Condition="#{!mascot.environment.workArea.rightBorder.isOn(mascot.anchor) &amp;&amp;
+			mascot.anchor.x &gt;= mascot.environment.workArea.right-400 &amp;&amp;
+			Math.abs(mascot.environment.workArea.bottom-mascot.anchor.y) &lt;mascot.environment.workArea.height/4}" />
+
+		<!-- IE Is Visible -->
+		<Condition Condition="#{mascot.environment.activeIE.visible}">
+			<Behavior Name="IeLeftJump" Frequency="50" Condition="#{mascot.anchor.x &lt; mascot.environment.activeIE.left &amp;&amp;
+				Math.abs(mascot.environment.activeIE.bottom-mascot.anchor.y) &lt;mascot.environment.activeIE.height/4}" />
+			<Behavior Name="IeRightJump" Frequency="50" Condition="#{mascot.anchor.x &gt; mascot.environment.activeIE.right &amp;&amp;
+				Math.abs(mascot.environment.activeIE.bottom-mascot.anchor.y) &lt;mascot.environment.activeIE.height/4}" />
+				
+			<Behavior Name="IeRightThrow" Frequency="20" Condition="#{mascot.environment.activeIE.bottom &lt; mascot.anchor.y-64 &amp;&amp;
+				mascot.anchor.x &lt; mascot.environment.activeIE.left}" />
+			<Behavior Name="IeLeftThrow" Frequency="20" Condition="#{mascot.environment.activeIE.bottom &lt; mascot.anchor.y-64 &amp;&amp;
+				mascot.anchor.x &gt; mascot.environment.activeIE.right}" />
+			<Behavior Name="WalkIeRightThrow" Frequency="0" Condition="#{mascot.environment.activeIE.bottom &lt; mascot.anchor.y-64 &amp;&amp;
+				mascot.anchor.x &lt; mascot.environment.activeIE.left}" />
+			<Behavior Name="WalkIeLeftThrow" Frequency="0" Condition="#{mascot.environment.activeIE.bottom &lt; mascot.anchor.y-64 &amp;&amp;
+				mascot.anchor.x &gt; mascot.environment.activeIE.right}" />
+		</Condition>
+
+
+	</BehaviorList>
+</Mascot>
