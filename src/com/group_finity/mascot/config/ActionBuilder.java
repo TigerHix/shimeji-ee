@@ -44,7 +44,7 @@ public class ActionBuilder implements IActionBuilder {
 
 	private final List<IActionBuilder> actionRefs = new ArrayList<IActionBuilder>();
 
-	public ActionBuilder(final Configuration configuration, final Entry actionNode) throws IOException {
+	public ActionBuilder(final Configuration configuration, final Entry actionNode, final String imageSet) throws IOException {
 		this.name = actionNode.getAttribute("Name");
 		this.type = actionNode.getAttribute("Type");
 		this.className = actionNode.getAttribute("Class");
@@ -53,14 +53,14 @@ public class ActionBuilder implements IActionBuilder {
 
 		this.getParams().putAll(actionNode.getAttributes());
 		for (final Entry node : actionNode.selectChildren("Animation")) {
-			this.getAnimationBuilders().add(new AnimationBuilder(node));
+			this.getAnimationBuilders().add(new AnimationBuilder(node,imageSet));
 		}
 
 		for (final Entry node : actionNode.getChildren()) {
 			if (node.getName().equals("ActionReference")) {
 				this.getActionRefs().add(new ActionRef(configuration, node));
 			} else if (node.getName().equals("Action")) {
-				this.getActionRefs().add(new ActionBuilder(configuration, node));
+				this.getActionRefs().add(new ActionBuilder(configuration, node, imageSet));
 			}
 		}
 
@@ -112,11 +112,11 @@ public class ActionBuilder implements IActionBuilder {
 
 			} else if (this.type.equals("Move")) {
 				return new Move(animations, variables);
-			} else if (this.type.equals("Pause")) {
+			} else if (this.type.equals("Stay")) {
 				return new Stay(animations, variables);
-			} else if (this.type.equals("Fixed")) {
+			} else if (this.type.equals("Animate")) {
 				return new Animate(animations, variables);
-			} else if (this.type.equals("Composite")) {
+			} else if (this.type.equals("Sequence")) {
 				return new Sequence(variables, actions.toArray(new Action[0]));
 			} else if (this.type.equals("Select")) {
 				return new Select(variables, actions.toArray(new Action[0]));

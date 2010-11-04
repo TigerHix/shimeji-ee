@@ -50,7 +50,7 @@ public class Breed extends Animate {
 
 	private void breed() throws VariableException {
 
-		final Mascot mascot = new Mascot();
+		final Mascot mascot = new Mascot(getMascot().getImageSet());
 
 		log.log(Level.INFO, "Breed Mascot ({0},{1},{2})", new Object[] { getMascot(), this, mascot });
 
@@ -64,7 +64,7 @@ public class Breed extends Animate {
 		mascot.setLookRight(getMascot().isLookRight());
 
 		try {
-			mascot.setBehavior(Main.getInstance().getConfiguration().buildBehavior(getBornBehavior()));
+			mascot.setBehavior(Main.getInstance().getConfiguration(getMascot().getImageSet()).buildBehavior(getBornBehavior()));
 
 			getMascot().getManager().add(mascot);
 		

@@ -68,6 +68,7 @@
 				<include name="Shimeji-eeHomePage.url"/>
 				<include name="originallicense.txt"/>
 				<include name="originalreadme.txt"/>
+				<include name="readme.txt"/>				
 				<include name="img/**/*" />
 				<include name="conf/**/*" />
 				<exclude name="conf/behaviors.xml" />

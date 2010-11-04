@@ -25,16 +25,20 @@ public class AnimationBuilder {
 	private static final Logger log = Logger.getLogger(AnimationBuilder.class.getName());
 
 	private final String condition;
+	
+	private String imageSet = "/";
 
 	private final List<Pose> poses = new ArrayList<Pose>();
 
-	public AnimationBuilder(final Entry animationNode) throws IOException {
+	public AnimationBuilder(final Entry animationNode, final String imageSet) throws IOException {
+		if( !imageSet.equals("") )
+			this.imageSet = "/"+imageSet+"/";
+		
 		this.condition = animationNode.getAttribute("Condition") == null ? "true" : animationNode.getAttribute("Condition");
 
 		log.log(Level.INFO, "Start Reading Animations");
 
 		for (final Entry frameNode : animationNode.getChildren()) {
-
 			this.getPoses().add(loadPose(frameNode));
 		}
 
@@ -43,8 +47,8 @@ public class AnimationBuilder {
 
 	private Pose loadPose(final Entry frameNode) throws IOException {
 
-		final String imageText = frameNode.getAttribute("Image");
-		final String anchorText = frameNode.getAttribute("ReferenceFrame");
+		final String imageText = imageSet+frameNode.getAttribute("Image");
+		final String anchorText = frameNode.getAttribute("ImageAnchor");
 		final String moveText = frameNode.getAttribute("Velocity");
 		final String durationText = frameNode.getAttribute("Duration");
 
@@ -63,7 +67,6 @@ public class AnimationBuilder {
 		log.log(Level.INFO, "ReadPosition({0})", pose);
 		
 		return pose;
-
 	}
 
 	public Animation buildAnimation() throws AnimationInstantiationException {

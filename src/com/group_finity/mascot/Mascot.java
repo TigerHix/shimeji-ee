@@ -46,17 +46,9 @@ public class Mascot {
 
 	private static AtomicInteger lastId = new AtomicInteger();
 
-	private static boolean showSystemTrayMenu = false;
-
-	public static void setShowSystemTrayMenu(boolean showSystemTrayMenu) {
-		Mascot.showSystemTrayMenu = showSystemTrayMenu;
-	}
-
-	public static boolean isShowSystemTrayMenu() {
-		return showSystemTrayMenu;
-	}
-
 	private final int id;
+	
+	private String imageSet = "";
 
 	/**
 	 * A window that displays the mascot.
@@ -102,8 +94,9 @@ public class Mascot {
 
 	private MascotEnvironment environment = new MascotEnvironment(this);
 
-	public Mascot() {
+	public Mascot( final String imageSet ) {
 		this.id = lastId.incrementAndGet();
+		this.imageSet = imageSet;
 
 		log.log(Level.INFO, "Created a mascot ({0})", this);
 
@@ -185,67 +178,62 @@ public class Mascot {
 			}
 		});
 
+		// "Make Another!" menu item
+		final JMenuItem increaseMenu = new JMenuItem("Another One!");
+		increaseMenu.addActionListener(new ActionListener() {
+			public void actionPerformed(final ActionEvent event) {
+				Main.getInstance().createMascot(imageSet);
+			}
+		});
+
 		final JMenuItem disposeMenu = new JMenuItem("Bye Bye!");
 		disposeMenu.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(final ActionEvent e) {
 				dispose();
 			}
+		});		
+		
+		// "Gather!" Menu item
+		final JMenuItem gatherMenu = new JMenuItem("Follow Mouse!");
+		gatherMenu.addActionListener(new ActionListener() {
+			public void actionPerformed(final ActionEvent event) {
+				getManager().setBehaviorAll(Main.getInstance().getConfiguration(imageSet), Main.BEHAVIOR_GATHER, imageSet);
+			}
 		});
 
-		popup.add(disposeMenu);
+		// "Only One!" menu item
+		final JMenuItem oneMenu = new JMenuItem("Reduce to One!");
+		oneMenu.addActionListener(new ActionListener() {
+			public void actionPerformed(final ActionEvent event) {
+				getManager().remainOne(imageSet);
+			}
+		});
 
-		if (isShowSystemTrayMenu()) {
+		// "Restore IE!" menu item
+		final JMenuItem restoreMenu = new JMenuItem("Restore IE!");
+		restoreMenu.addActionListener(new ActionListener() {
+			public void actionPerformed(final ActionEvent event) {
+				NativeFactory.getInstance().getEnvironment().restoreIE();
+			}
+		});
 
-			popup.add(new JSeparator());
+		// "Bye Bye!" menu item
+		final JMenuItem closeMenu = new JMenuItem("Bye Everyone!");
+		closeMenu.addActionListener(new ActionListener() {
+			public void actionPerformed(final ActionEvent e) {
+				Main.getInstance().exit();
+			}
+		});
 
-			// "Make Another!" menu item
-			final JMenuItem increaseMenu = new JMenuItem("Another One!");
-			increaseMenu.addActionListener(new ActionListener() {
-				public void actionPerformed(final ActionEvent event) {
-					Main.getInstance().createMascot();
-				}
-			});
-
-			// "Gather!" Menu item
-			final JMenuItem gatherMenu = new JMenuItem("Follow Mouse!");
-			gatherMenu.addActionListener(new ActionListener() {
-				public void actionPerformed(final ActionEvent event) {
-					getManager().setBehaviorAll(Main.getInstance().getConfiguration(), Main.BEHAVIOR_GATHER);
-				}
-			});
-
-			// "Only One!" menu item
-			final JMenuItem oneMenu = new JMenuItem("Reduce to One!");
-			oneMenu.addActionListener(new ActionListener() {
-				public void actionPerformed(final ActionEvent event) {
-					getManager().remainOne();
-				}
-			});
-
-			// "Restore IE!" menu item
-			final JMenuItem restoreMenu = new JMenuItem("Restore IE!");
-			restoreMenu.addActionListener(new ActionListener() {
-				public void actionPerformed(final ActionEvent event) {
-					NativeFactory.getInstance().getEnvironment().restoreIE();
-				}
-			});
-
-			// "Bye Bye!" menu item
-			final JMenuItem closeMenu = new JMenuItem("Bye Everyone!");
-			closeMenu.addActionListener(new ActionListener() {
-				public void actionPerformed(final ActionEvent e) {
-					Main.getInstance().exit();
-				}
-			});
-
-			popup.add(increaseMenu);
-			popup.add(gatherMenu);
-			popup.add(oneMenu);
-			popup.add(restoreMenu);
-			popup.add(new JSeparator());
-			popup.add(closeMenu);
-		}
+		popup.add(increaseMenu);
+		popup.add(disposeMenu);	
+		popup.add(new JSeparator());		
+		popup.add(gatherMenu);
+		popup.add(oneMenu);
+		popup.add(restoreMenu);
+		popup.add(new JSeparator());
+		popup.add(closeMenu);
 
 		getWindow().asJWindow().requestFocus();
 
@@ -383,4 +371,8 @@ public class Mascot {
 	public MascotEnvironment getEnvironment() {
 		return environment;
 	}
+	
+	public String getImageSet() {
+		return imageSet;
+	}	
 }

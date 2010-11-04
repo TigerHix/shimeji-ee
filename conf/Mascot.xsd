@@ -112,7 +112,7 @@
    				</restriction>
    			</simpleType>
    		</attribute>
-   		<attribute name="ReferenceFrame" use="required">
+   		<attribute name="ImageAnchor" use="required">
    			<simpleType>
    				<restriction base="string">
    					<pattern value="-?\d+,-?\d+" />

@@ -130,7 +130,7 @@ public class Manager {
 
 		synchronized (this.getMascots()) {
 
-			// Add the mascot should be added
+			// Add the mascot if it should be added
 			for (final Mascot mascot : this.getAdded()) {
 				this.getMascots().add(mascot);
 			}
@@ -176,11 +176,13 @@ public class Manager {
 		mascot.setManager(null);
 	}
 
-	public void setBehaviorAll(final Configuration configuration, final String name) {
+	public void setBehaviorAll(final Configuration configuration, final String name, String imageSet) {
 		synchronized (this.getMascots()) {
 			for (final Mascot mascot : this.getMascots()) {
 				try {
-					mascot.setBehavior(configuration.buildBehavior(name));
+					if( mascot.getImageSet().equals(imageSet) ) {
+						mascot.setBehavior(configuration.buildBehavior(name));						
+					}
 				} catch (final BehaviorInstantiationException e) {
 					log.log(Level.SEVERE, "Failed to initialize the following actions", e);
 					mascot.dispose();
@@ -194,8 +196,24 @@ public class Manager {
 
 	public void remainOne() {
 		synchronized (this.getMascots()) {
-			for (int i = this.getMascots().size() - 1; i > 0; --i) {
-				this.getMascots().get(i).dispose();
+			int totalMascots = this.getMascots().size();
+			for (int i = totalMascots - 1; i > 0; --i) {
+				this.getMascots().get(i).dispose();				
+			}
+		}
+	}	
+	
+	public void remainOne( String imageSet ) {
+		synchronized (this.getMascots()) {
+			int totalMascots = this.getMascots().size();
+			boolean isFirst = true;
+			for (int i = totalMascots - 1; i >= 0; --i) {
+				Mascot m = this.getMascots().get(i);
+				if( m.getImageSet().equals(imageSet) && isFirst) {
+					isFirst = false;
+				} else if( m.getImageSet().equals(imageSet) && !isFirst) {
+					m.dispose();
+				}
 			}
 		}
 	}

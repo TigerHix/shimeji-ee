@@ -10,7 +10,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FilenameFilter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
@@ -43,7 +48,6 @@ public class Main {
 	static final String BEHAVIOR_GATHER = "GatherAroundMouse";
 
 	static {
-		
 		try {
 			LogManager.getLogManager().readConfiguration(Main.class.getResourceAsStream("/logging.properties"));
 		} catch (final SecurityException e) {
@@ -61,46 +65,84 @@ public class Main {
 
 	private final Manager manager = new Manager();
 
-	private final Configuration configuration = new Configuration();
-
+	private ArrayList<String> imageSets = new ArrayList<String>();	
+	
+	private Hashtable<String,Configuration> configurations = new Hashtable<String,Configuration>();
+	
 	public static void main(final String[] args) {
-		getInstance().run();
+		try {
+			getInstance().run();
+		} catch(OutOfMemoryError err) {
+			log.log (Level.SEVERE, "Out of Memory Exception", err);
+			System.out.println("You ran out of memory.  You've probably have too many " +
+					"mascots in the image folder for your computer to handle.  Move some to the " +
+					"img unused folder and try again.");
+		}
 	}
 
 	public void run() {
 		
+		// Get list of imagesets (directories under img)
+		File dir = new File("./img");
+		FilenameFilter fileFilter = new FilenameFilter() {
+		    public boolean accept(File dir, String name) {
+		    	if( name.equals("unused") ) return false;
+		    	return new File(dir+"/"+name).isDirectory(); 
+		    }
+		};
+		String[] children = dir.list(fileFilter);	
+		for ( String directory : children ) { 
+			imageSets.add(directory);
+		}
+		
 		// Load settings
-		loadConfiguration();
-
+		for( String imageSet : imageSets ) {
+			loadConfiguration(imageSet);
+		}
+		
 		// Create the tray icon
 		createTrayIcon();
 
 		// Create the first mascot
-		createMascot();
+		for( String imageSet : imageSets ) {
+			createMascot(imageSet);
+		}
 
-		getManager().start ();
-		
-		getManager().start();
+		getManager().start ();		
 	}
 
-	private void loadConfiguration() {
+	private void loadConfiguration( final String imageSet ) {
 
 		try {
-			log.log(Level.INFO, "Read Action File ((0))", "/actions.xml");
-
+			String actionsFile = "./conf/actions.xml";		
+			if( new File("./conf/"+imageSet+"/actions.xml").exists() ) {	
+				actionsFile = "./conf/"+imageSet+"/actions.xml";				
+			}					
+			
+			log.log(Level.INFO, "Read Action File ((0))", actionsFile);
+			
 			final Document actions = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(
-					Main.class.getResourceAsStream("/actions.xml"));
+					new FileInputStream( new File(actionsFile)));
 
-			this.getConfiguration().load(new Entry(actions.getDocumentElement()));
+			Configuration configuration = new Configuration();
 
-			log.log(Level.INFO, "Read Behavior File ((0))", "/behaviors.xml");			
+			configuration.load(new Entry(actions.getDocumentElement()),imageSet);
+
+			String behaviorsFile = "./conf/behaviors.xml";			
+			if( new File("./conf/"+imageSet+"/behaviors.xml").exists() ) {	
+				behaviorsFile = "./conf/"+imageSet+"/behaviors.xml";				
+			}				
+			
+			log.log(Level.INFO, "Read Behavior File ((0))", behaviorsFile);			
 			
 			final Document behaviors = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(
-					Main.class.getResourceAsStream ("/behaviors.xml"));
+					new FileInputStream( new File(behaviorsFile) ) );
 
-			this.getConfiguration().load(new Entry(behaviors.getDocumentElement()));
+			configuration.load(new Entry(behaviors.getDocumentElement()),imageSet);
 
-			this.getConfiguration().validate();
+			configuration.validate();
+			
+			configurations.put( imageSet, configuration );
 			
 		} catch (final IOException e) {
 			log.log (Level.SEVERE, "Failed to load configuration files", e);
@@ -133,7 +175,7 @@ public class Main {
 				createMascot();
 			}
 		});
-
+/*
 		// "Gather!" Menu item
 		final MenuItem gatherMenu = new MenuItem ("Follow Mouse!");
 		gatherMenu.addActionListener(new ActionListener() {
@@ -141,7 +183,7 @@ public class Main {
 				Main.this.getManager().setBehaviorAll(Main.this.getConfiguration(), BEHAVIOR_GATHER);
 			}
 		});
-
+*/
 		// "Only One!" menu item
 		final MenuItem oneMenu = new MenuItem("Reduce to One!");
 		oneMenu.addActionListener(new ActionListener() {
@@ -168,8 +210,11 @@ public class Main {
 		
 		// Create the context "popup" menu.
 		final PopupMenu trayPopup = new PopupMenu();
+
 		trayPopup.add(increaseMenu);
+/*
 		trayPopup.add(gatherMenu);
+*/
 		trayPopup.add(oneMenu);
 		trayPopup.add(restoreMenu);
 		trayPopup.add(new MenuItem("-"));
@@ -197,20 +242,26 @@ public class Main {
 
 		} catch (final AWTException e) {
 			log.log(Level.SEVERE, "Failed to create tray icon", e);
-			Mascot.setShowSystemTrayMenu(true);
 			getManager().setExitOnLastRemoved(true);
 		}
 
 	}
 
+	// Randomly creates a mascot
+	public void createMascot() {
+		int length = imageSets.size();
+		int random = (int)(length * Math.random());
+		createMascot( imageSets.get(random) );
+	}
+	
 	/**
 	 * Create a mascot
 	 */
-	public void createMascot() {
+	public void createMascot( String imageSet ) {
 		log.log(Level.INFO, "create a mascot");
 
 		// Create one mascot
-		final Mascot mascot = new Mascot();
+		final Mascot mascot = new Mascot( imageSet );
 
 		// Create it outside the bounds of the screen
 		mascot.setAnchor(new Point(-1000, -1000));
@@ -219,7 +270,7 @@ public class Main {
 		mascot.setLookRight(Math.random() < 0.5);
 
 		try {
-			mascot.setBehavior(getConfiguration().buildBehavior(null, mascot));
+			mascot.setBehavior(getConfiguration(imageSet).buildBehavior(null, mascot));
 			this.getManager().add(mascot);
 		} catch (final BehaviorInstantiationException e) {
 			log.log (Level.SEVERE, "Failed to initialize the first action", e);
@@ -230,10 +281,10 @@ public class Main {
 		}
 	}
 
-	public Configuration getConfiguration() {
-		return this.configuration;
-	}
-
+	public Configuration getConfiguration( String imageSet ) {
+		return configurations.get(imageSet);
+	}	
+	
 	private Manager getManager() {
 		return this.manager;
 	}

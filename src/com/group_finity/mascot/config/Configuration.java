@@ -32,7 +32,7 @@ public class Configuration {
 
 	private final Map<String, BehaviorBuilder> behaviorBuilders = new LinkedHashMap<String, BehaviorBuilder>();
 
-	public void load(final Entry configurationNode) throws IOException, ConfigurationException {
+	public void load(final Entry configurationNode, final String imageSet) throws IOException, ConfigurationException {
 
 		log.log(Level.INFO, "Start Reading Configuration File...");
 
@@ -42,7 +42,7 @@ public class Configuration {
 
 			for (final Entry node : list.selectChildren("Action")) {
 
-				final ActionBuilder action = new ActionBuilder(this, node);
+				final ActionBuilder action = new ActionBuilder(this, node, imageSet);
 
 				if ( this.getActionBuilders().containsKey(action.getName())) {
 					throw new ConfigurationException("Duplicate Action Found: "+action.getName());
