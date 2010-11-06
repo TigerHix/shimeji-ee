@@ -26,13 +26,13 @@ public class AnimationBuilder {
 
 	private final String condition;
 	
-	private String imageSet = "/";
+	private String imageSet = "";
 
 	private final List<Pose> poses = new ArrayList<Pose>();
 
 	public AnimationBuilder(final Entry animationNode, final String imageSet) throws IOException {
 		if( !imageSet.equals("") )
-			this.imageSet = "/"+imageSet+"/";
+			this.imageSet = "/"+imageSet;
 		
 		this.condition = animationNode.getAttribute("Condition") == null ? "true" : animationNode.getAttribute("Condition");
 

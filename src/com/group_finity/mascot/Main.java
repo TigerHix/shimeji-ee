@@ -86,7 +86,7 @@ public class Main {
 		File dir = new File("./img");
 		FilenameFilter fileFilter = new FilenameFilter() {
 		    public boolean accept(File dir, String name) {
-		    	if( name.equals("unused") ) return false;
+		    	if( name.equals("unused") || name.equals(".svn") ) return false;
 		    	return new File(dir+"/"+name).isDirectory(); 
 		    }
 		};
@@ -106,8 +106,8 @@ public class Main {
 		// Create the first mascot
 		for( String imageSet : imageSets ) {
 			createMascot(imageSet);
-		}
-
+		}	
+		
 		getManager().start ();		
 	}
 
@@ -168,23 +168,23 @@ public class Main {
 
 		log.log (Level.INFO, "create a tray icon");
 
-		// "Make Another!" menu item
+		// "Another One!" menu item
 		final MenuItem increaseMenu = new MenuItem ("Another One!");
 		increaseMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(final ActionEvent event) {
 				createMascot();
 			}
 		});
-/*
-		// "Gather!" Menu item
+
+		// "Follow One!" Menu item
 		final MenuItem gatherMenu = new MenuItem ("Follow Mouse!");
 		gatherMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(final ActionEvent event) {
-				Main.this.getManager().setBehaviorAll(Main.this.getConfiguration(), BEHAVIOR_GATHER);
+				Main.this.getManager().setBehaviorAll(BEHAVIOR_GATHER);
 			}
 		});
-*/
-		// "Only One!" menu item
+
+		// "Reduce to One!" menu item
 		final MenuItem oneMenu = new MenuItem("Reduce to One!");
 		oneMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(final ActionEvent event) {
@@ -200,7 +200,7 @@ public class Main {
 			}
 		});
 
-		// "Bye Bye!" menu item
+		// "Bye Everyone!" menu item
 		final MenuItem closeMenu = new MenuItem("Bye Everyone!");
 		closeMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(final ActionEvent e) {
@@ -212,9 +212,7 @@ public class Main {
 		final PopupMenu trayPopup = new PopupMenu();
 
 		trayPopup.add(increaseMenu);
-/*
 		trayPopup.add(gatherMenu);
-*/
 		trayPopup.add(oneMenu);
 		trayPopup.add(restoreMenu);
 		trayPopup.add(new MenuItem("-"));

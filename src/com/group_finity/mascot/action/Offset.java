@@ -14,11 +14,11 @@ public class Offset extends InstantAction {
 
 	private static final Logger log = Logger.getLogger(Offset.class.getName());
 
-	public static final String PARAMETER_OFFSETX = "OffsetX";
+	public static final String PARAMETER_OFFSETX = "X";
 
 	private static final int DEFAULT_OFFSETX = 0;
 
-	public static final String PARAMETER_OFFSETY = "OffsetY";
+	public static final String PARAMETER_OFFSETY = "Y";
 
 	private static final int DEFAULT_OFFSETY = 0;
 

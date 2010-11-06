@@ -178,7 +178,7 @@ public class Mascot {
 			}
 		});
 
-		// "Make Another!" menu item
+		// "Another One!" menu item
 		final JMenuItem increaseMenu = new JMenuItem("Another One!");
 		increaseMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(final ActionEvent event) {
@@ -186,15 +186,16 @@ public class Mascot {
 			}
 		});
 
+		// "Bye Bye!" menu item
 		final JMenuItem disposeMenu = new JMenuItem("Bye Bye!");
 		disposeMenu.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(final ActionEvent e) {
 				dispose();
 			}
-		});		
+		});	
 		
-		// "Gather!" Menu item
+		// "Follow Mouse!" Menu item
 		final JMenuItem gatherMenu = new JMenuItem("Follow Mouse!");
 		gatherMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(final ActionEvent event) {
@@ -202,7 +203,7 @@ public class Mascot {
 			}
 		});
 
-		// "Only One!" menu item
+		// "Reduce to One!" menu item
 		final JMenuItem oneMenu = new JMenuItem("Reduce to One!");
 		oneMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(final ActionEvent event) {
@@ -218,20 +219,45 @@ public class Mascot {
 			}
 		});
 
-		// "Bye Bye!" menu item
+		// "Bye Everyone!" menu item
 		final JMenuItem closeMenu = new JMenuItem("Bye Everyone!");
 		closeMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(final ActionEvent e) {
 				Main.getInstance().exit();
 			}
 		});
-
+	
+		// Add the Behaviors submenu.  Currently slightly buggy, sometimes the menu ghosts.
+		com.group_finity.mascot.menu.JLongMenu submenu = new com.group_finity.mascot.menu.JLongMenu("Behaviors: ",30);
+		// The MenuScroller would look better than the JLongMenu, but the initial positioning is not working correctly.
+		//MenuScroller.setScrollerFor(submenu, 30, 125);
+		submenu.setAutoscrolls(true);		
+		JMenuItem item;
+		com.group_finity.mascot.config.Configuration config = Main.getInstance().getConfiguration(getImageSet());
+		for( String behaviorName : config.getBehaviorNames() ) {		
+			final String command = behaviorName;
+			item = new JMenuItem(behaviorName);
+			item.addActionListener(new ActionListener() {
+				public void actionPerformed(final ActionEvent e) {
+					try {									
+						setBehavior(Main.getInstance().getConfiguration(getImageSet()).buildBehavior(command));
+					} catch( Exception err ) {
+						log.log(Level.SEVERE, "Error ({0})", this);
+					}					
+				}
+			});
+			submenu.add( item );	
+			submenu.add( item );	
+		}		
+		
 		popup.add(increaseMenu);
 		popup.add(disposeMenu);	
 		popup.add(new JSeparator());		
 		popup.add(gatherMenu);
 		popup.add(oneMenu);
 		popup.add(restoreMenu);
+		popup.add(new JSeparator());
+		popup.add(submenu);
 		popup.add(new JSeparator());
 		popup.add(closeMenu);
 

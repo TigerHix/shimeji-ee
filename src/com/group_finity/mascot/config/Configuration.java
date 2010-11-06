@@ -170,4 +170,8 @@ public class Configuration {
 		return this.behaviorBuilders;
 	}
 
+	public java.util.Set<String> getBehaviorNames() {
+		return behaviorBuilders.keySet();
+	}
+	
 }

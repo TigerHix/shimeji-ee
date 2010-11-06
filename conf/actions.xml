@@ -8,13 +8,13 @@
 
 		<!-- Standing -->
 
-		<Action Name="Stand" Type="Stay" Frame="Floor">
+		<Action Name="Stand" Type="Stay" BorderType="Floor">
 			<Animation>
 				<Pose Image="/shime1.png" ImageAnchor="64,128" Velocity="0,0" Duration="250" />
 			</Animation>
 		</Action>
 
-		<Action Name="Walk" Type="Move" Frame="Floor">
+		<Action Name="Walk" Type="Move" BorderType="Floor">
 			<Animation>
 				<Pose Image="/shime1.png" ImageAnchor="64,128" Velocity="-2,0" Duration="6" />
 				<Pose Image="/shime2.png" ImageAnchor="64,128" Velocity="-2,0" Duration="6" />
@@ -23,7 +23,7 @@
 			</Animation>
 		</Action>
 
-		<Action Name="Run" Type="Move" Frame="Floor">
+		<Action Name="Run" Type="Move" BorderType="Floor">
 			<Animation>
 				<Pose Image="/shime1.png" ImageAnchor="64,128" Velocity="-4,0" Duration="2" />
 				<Pose Image="/shime2.png" ImageAnchor="64,128" Velocity="-4,0" Duration="2" />
@@ -32,7 +32,7 @@
 			</Animation>
 		</Action>
 
-		<Action Name="Dash" Type="Move" Frame="Floor">
+		<Action Name="Dash" Type="Move" BorderType="Floor">
 			<Animation>
 				<Pose Image="/shime1.png" ImageAnchor="64,128" Velocity="-8,0" Duration="2" />
 				<Pose Image="/shime2.png" ImageAnchor="64,128" Velocity="-8,0" Duration="2" />
@@ -43,18 +43,18 @@
 
 		<!-- Sitting -->
 
-		<Action Name="Sit" Type="Stay" Frame="Floor">
+		<Action Name="Sit" Type="Stay" BorderType="Floor">
 			<Animation>
 				<Pose Image="/shime11.png" ImageAnchor="64,128" Velocity="0,0" Duration="250" />
 			</Animation>
 		</Action>
-		<Action Name="SitAndLookUp" Type="Stay" Frame="Floor">
+		<Action Name="SitAndLookUp" Type="Stay" BorderType="Floor">
 			<Animation>
 				<Pose Image="/shime26.png" ImageAnchor="64,128" Velocity="0,0" Duration="250" />
 			</Animation>
 		</Action>
 
-		<Action Name="SitAndLookAtMouse" Type="Stay" Frame="Floor">
+		<Action Name="SitAndLookAtMouse" Type="Stay" BorderType="Floor">
 			<Animation Condition="#{mascot.environment.cursor.y &lt; mascot.environment.screen.height/2}">
 				<Pose Image="/shime26.png" ImageAnchor="64,128" Velocity="0,0" Duration="250" />
 			</Animation>
@@ -63,7 +63,7 @@
 			</Animation>
 		</Action>
 
-		<Action Name="SitAndSpinHead" Type="Animate" Frame="Floor">
+		<Action Name="SitAndSpinHead" Type="Animate" BorderType="Floor">
 			<Animation>
 				<Pose Image="/shime26.png" ImageAnchor="64,128" Velocity="0,0" Duration="5" />
 				<Pose Image="/shime15.png" ImageAnchor="64,128" Velocity="0,0" Duration="5" />
@@ -76,19 +76,19 @@
 			</Animation>
 		</Action>
 
-		<Action Name="SitWithLegsUp" Type="Stay" Frame="Floor">
+		<Action Name="SitWithLegsUp" Type="Stay" BorderType="Floor">
 			<Animation>
 				<Pose Image="/shime30.png" ImageAnchor="64,112" Velocity="0,0" Duration="250" />
 			</Animation>
 		</Action>
 
-		<Action Name="SitWithLegsDown" Type="Stay" Frame="Floor">
+		<Action Name="SitWithLegsDown" Type="Stay" BorderType="Floor">
 			<Animation>
 				<Pose Image="/shime31.png" ImageAnchor="64,112" Velocity="0,0" Duration="250" />
 			</Animation>
 		</Action>
 
-		<Action Name="SitAndDangleLegs" Type="Stay" Frame="Floor">
+		<Action Name="SitAndDangleLegs" Type="Stay" BorderType="Floor">
 			<Animation>
 				<Pose Image="/shime31.png" ImageAnchor="64,112" Velocity="0,0" Duration="5" />
 				<Pose Image="/shime32.png" ImageAnchor="64,112" Velocity="0,0" Duration="15" />
@@ -99,13 +99,13 @@
 
 		<!-- Laying -->
 
-		<Action Name="Sprawl" Type="Stay" Frame="Floor">
+		<Action Name="Sprawl" Type="Stay" BorderType="Floor">
 			<Animation>
 				<Pose Image="/shime21.png" ImageAnchor="64,128" Velocity="0,0" Duration="250" />
 			</Animation>
 		</Action>
 
-		<Action Name="Creep" Type="Move" Frame="Floor">
+		<Action Name="Creep" Type="Move" BorderType="Floor">
 			<Animation>
 				<Pose Image="/shime20.png" ImageAnchor="64,128" Velocity="0,0" Duration="28" />
 				<Pose Image="/shime20.png" ImageAnchor="64,128" Velocity="-2,0" Duration="4" />
@@ -117,13 +117,13 @@
 
 		<!-- Ceiling -->
 
-		<Action Name="GrabCeiling" Type="Stay" Frame="Ceiling">
+		<Action Name="GrabCeiling" Type="Stay" BorderType="Ceiling">
 			<Animation>
 				<Pose Image="/shime23.png" ImageAnchor="64,48" Velocity="0,0" Duration="250" />
 			</Animation>
 		</Action>
 		
-		<Action Name="ClimbCeiling" Type="Move" Frame="Ceiling">
+		<Action Name="ClimbCeiling" Type="Move" BorderType="Ceiling">
 			<Animation>
 				<Pose Image="/shime25.png" ImageAnchor="64,48" Velocity="0,0" Duration="16" />
 				<Pose Image="/shime25.png" ImageAnchor="64,48" Velocity="-1,0" Duration="4" />
@@ -138,12 +138,12 @@
 
 		<!-- Wall -->
 
-		<Action Name="GrabWall" Type="Stay" Frame="Wall">
+		<Action Name="GrabWall" Type="Stay" BorderType="Wall">
 			<Animation>
 				<Pose Image="/shime13.png" ImageAnchor="64,128" Velocity="0,0" Duration="250" />
 			</Animation>
 		</Action>
-		<Action Name="ClimbWall" Type="Move" Frame="Wall">
+		<Action Name="ClimbWall" Type="Move" BorderType="Wall">
 			<Animation Condition="#{TargetY &lt; mascot.anchor.y}">
 				<Pose Image="/shime14.png" ImageAnchor="64,128" Velocity="0,0" Duration="16" />
 				<Pose Image="/shime14.png" ImageAnchor="64,128" Velocity="0,-1" Duration="4" />
@@ -175,7 +175,7 @@
 				<Pose Image="/shime36.png" ImageAnchor="64,128" Velocity="0,0" Duration="250" />
 			</Animation>
 		</Action>
-		<Action Name="WalkWithIe" Frame="Floor" Type="Embedded" Class="com.group_finity.mascot.action.WalkWithIE"
+		<Action Name="WalkWithIe" BorderType="Floor" Type="Embedded" Class="com.group_finity.mascot.action.WalkWithIE"
 			 IeOffsetX="0" IeOffsetY="-64">
 			<Animation>
 				<Pose Image="/shime34.png" ImageAnchor="64,128" Velocity="-2,0" Duration="6" />
@@ -184,7 +184,7 @@
 				<Pose Image="/shime36.png" ImageAnchor="64,128" Velocity="-2,0" Duration="6" />
 			</Animation>
 		</Action>
-		<Action Name="RunWithIe" Frame="Floor" Type="Embedded" Class="com.group_finity.mascot.action.WalkWithIE"
+		<Action Name="RunWithIe" BorderType="Floor" Type="Embedded" Class="com.group_finity.mascot.action.WalkWithIE"
 			 IeOffsetX="0" IeOffsetY="-64">
 			<Animation>
 				<Pose Image="/shime34.png" ImageAnchor="64,128" Velocity="-8,0" Duration="2" />
@@ -193,7 +193,7 @@
 				<Pose Image="/shime36.png" ImageAnchor="64,128" Velocity="-8,0" Duration="2" />
 			</Animation>
 		</Action>
-		<Action Name="ThrowIe" Frame="Floor" Type="Embedded" Class="com.group_finity.mascot.action.ThrowIE"
+		<Action Name="ThrowIe" BorderType="Floor" Type="Embedded" Class="com.group_finity.mascot.action.ThrowIE"
 			InitialVX="32" InitialVY="-10" Gravity="0.5">
 			<Animation>
 				<Pose Image="/shime37.png" ImageAnchor="64,128" Velocity="0,0" Duration="40" />
@@ -216,14 +216,14 @@
 			</Animation>
 		</Action>
 
-		<Action Name="Bouncing" Type="Animate" Frame="Floor">
+		<Action Name="Bouncing" Type="Animate" BorderType="Floor">
 			<Animation>
 				<Pose Image="/shime18.png" ImageAnchor="64,128" Velocity="0,0" Duration="4" />
 				<Pose Image="/shime19.png" ImageAnchor="64,128" Velocity="0,0" Duration="4" />
 			</Animation>
 		</Action>
 
-		<Action Name="Tripping" Type="Animate" Frame="Floor">
+		<Action Name="Tripping" Type="Animate" BorderType="Floor">
 			<Animation>
 				<Pose Image="/shime19.png" ImageAnchor="64,128" Velocity="-8,0" Duration="8" />
 				<Pose Image="/shime18.png" ImageAnchor="64,128" Velocity="-4,0" Duration="4" />

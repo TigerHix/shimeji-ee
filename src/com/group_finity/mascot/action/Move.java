@@ -79,9 +79,6 @@ public class Move extends BorderedAction {
 		}
 
 		getAnimation().next(getMascot(), getTime());
-		
-// I don't know why the ceiling crawl isn't working, but this fixes it		
-if( getMascot().getAnchor().y == 64 ) getMascot().getAnchor().y = 0;
 
 		if (targetX != DEFAULT_TARGETX) {
 			if ((getMascot().isLookRight() && (getMascot().getAnchor().x >= targetX))

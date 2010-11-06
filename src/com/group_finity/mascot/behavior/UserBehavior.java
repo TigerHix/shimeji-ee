@@ -55,7 +55,7 @@ public class UserBehavior implements Behavior {
 
 		this.setMascot(mascot);
 
-		log.log(Level.INFO, "Hazama Hikaru Behavior({0},{1})", new Object[] { this.getMascot(), this });
+		log.log(Level.INFO, "Default Behavior({0},{1})", new Object[] { this.getMascot(), this });
 
 		try {
 			getAction().init(mascot);

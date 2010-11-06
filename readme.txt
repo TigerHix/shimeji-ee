@@ -2,21 +2,29 @@ shimeji-ee
 
 Shimeji English Enhanced
 
-Shimeji is a Windows desktop mascot that freely wanders and plays around the screen.  The mascot is very configurable; its actions are defined through xml and its animations/images can be customized.  Shimeji was originally created by Yuki Yamada of Group Finity (http://www.group-finity.com/Shimeji/).  This branch of the original Shimeji project not only translates the program/source to English, but adds additional enhancements to Shimeji as well.
+Shimeji-ee is a Windows desktop mascot that freely wanders and plays around the screen.  The mascot is very configurable; its actions are defined through xml and its animations/images can be (painstakingly) customized.  Shimeji was originally created by Yuki Yamada of Group Finity (http://www.group-finity.com/Shimeji/).  This branch of the original Shimeji project not only translates the program/source to English, but adds additional enhancements to Shimeji.
 
+==== Homepage (with wiki) ==== 
+
+Homepage: http://code.google.com/p/shimeji-ee/
+
+==== Requirements ==== 
+
+1. Windows XP or higher
+2. Java 6, must be 32-bit
 
 ==== How to Start ==== 
 
-Double Click the Shimeji icon (Shimeji.exe).  Right click the tray icon or the individual Shimeji for options.  Left click the tray icon to create another Shimeji.
+Double Click the Shimeji-ee icon (Shimeji-ee.exe).  Right click the tray icon or the individual Shimeji for options.  Left click the tray icon to create another Shimeji.
 
 ==== Basic Configuration ==== 
 
-If you want multiple Shimeji types, you must have multiple image sets.  Basically, you put all your folders with the correct Shimeji images under the img directory.
+If you want multiple Shimeji types, you must have multiple image sets.  Basically, you put different folders with the correct Shimeji images under the img directory.
 
 For example, if you want to add, say, a new Batman Shimeji:
 
-1. Create a img/Batman folder.
-2. You must have an image set that mimicks the contents of img/Shimeji.  Create and put new shime1.png - shime46.png (with Batman images of course) in the img/Batman folder.  The filenames must be the same as the img/Shimeji files.  Refer to img/Shimeji for the proper character positions.
+1. Create an img/Batman folder.
+2. You must have an image set that mimicks the contents of img/Shimeji.  Create and put new versions of shime1.png - shime46.png (with Batman images of course) in the img/Batman folder.  The filenames must be the same as the img/Shimeji files.  Refer to img/Shimeji for the proper character positions.
 3. Start Shimeji-ee.  Now Shimeji and Batman will drop.  Right click Batman to perform Batman specific options.  Adding "Another One!" from the tray icon will randomly create add either Shimeji or Batman.
 
 When Shimeji-ee starts, one Shimeji for every image set in the img folder will be created.  If you have too many image sets, a lot of your computer's memory will be used... so be careful.  Shimeji-ee can eat up to 60% of your system's free memory.  
@@ -47,17 +55,11 @@ Right-click the tray icon of Shimeji, Select "Bye Everyone!"
 
 ==== How to Uninstall ==== 
 
-- From the installer -
-
-Remove the Shimeji from the Add or Remove Programs in Control Panel.
-
-- From the zip -
-
 Delete the unzipped folder.
 
 ==== Source ====
 
-Programmers may feel free to use the source.
+Programmers may feel free to use the source.  The Shimeji-ee source is under the New BSD license.
 Follow the zlib/libpng licenses.
 
 ==== Library ====

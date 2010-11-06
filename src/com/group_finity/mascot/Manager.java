@@ -176,6 +176,22 @@ public class Manager {
 		mascot.setManager(null);
 	}
 
+	public void setBehaviorAll(final String name) {
+		synchronized (this.getMascots()) {
+			for (final Mascot mascot : this.getMascots()) {
+				try {
+					mascot.setBehavior(Main.getInstance().getConfiguration(mascot.getImageSet()).buildBehavior(name));
+				} catch (final BehaviorInstantiationException e) {
+					log.log(Level.SEVERE, "Failed to initialize the following actions", e);
+					mascot.dispose();
+				} catch (final CantBeAliveException e) {
+					log.log(Level.SEVERE, "Fatal Error", e);
+					mascot.dispose();
+				}
+			}
+		}
+	}	
+	
 	public void setBehaviorAll(final Configuration configuration, final String name, String imageSet) {
 		synchronized (this.getMascots()) {
 			for (final Mascot mascot : this.getMascots()) {

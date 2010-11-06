@@ -23,8 +23,8 @@
   		<attribute name="TargetY" type="tns:Parameter" />
    		<attribute name="InitialVX" type="tns:Parameter" />
   		<attribute name="InitialVY" type="tns:Parameter" />
-  		<attribute name="OffsetX" type="tns:Parameter" />
-  		<attribute name="OffsetY" type="tns:Parameter" />
+  		<attribute name="X" type="tns:Parameter" />
+  		<attribute name="Y" type="tns:Parameter" />
   		<attribute name="LookRight" type="tns:Parameter" />
    		<attribute name="IeOffsetX" type="tns:Parameter" />
   		<attribute name="IeOffsetY" type="tns:Parameter" />
