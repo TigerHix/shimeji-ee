@@ -150,7 +150,7 @@ public class UserBehavior implements Behavior {
 				}
 
 			} else {
-				log.log(Level.INFO, "completed behavior({0},{1})", new Object[] { getMascot(), this });
+				log.log(Level.INFO, "Completed Behavior ({0},{1})", new Object[] { getMascot(), this });
 
 				try {
 					getMascot().setBehavior(this.getConfiguration().buildBehavior(getName(), getMascot()));
@@ -159,7 +159,7 @@ public class UserBehavior implements Behavior {
 				}
 			}
 		} catch (final LostGroundException e) {
-			log.log(Level.INFO, "away from the ground({0},{1})", new Object[] { getMascot(), this });
+			log.log(Level.INFO, "Lost Ground ({0},{1})", new Object[] { getMascot(), this });
 
 			try {
 				getMascot().setBehavior(this.getConfiguration().buildBehavior(BEHAVIORNAME_FALL));

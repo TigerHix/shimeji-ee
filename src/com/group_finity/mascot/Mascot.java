@@ -130,7 +130,7 @@ public class Mascot {
 			try {
 				getBehavior().mousePressed(event);
 			} catch (final CantBeAliveException e) {
-				log.log(Level.SEVERE, "The situation can not keep going", e);
+				log.log(Level.SEVERE, "Fatal Error", e);
 				dispose();
 			}
 		}

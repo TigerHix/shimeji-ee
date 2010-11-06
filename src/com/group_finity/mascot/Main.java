@@ -44,8 +44,8 @@ public class Main {
 
 	private static final Logger log = Logger.getLogger(Main.class.getName());
 
-	// Action that matches the "Gather!" context menu command
-	static final String BEHAVIOR_GATHER = "GatherAroundMouse";
+	// Action that matches the "Gather Around Mouse!" context menu command
+	static final String BEHAVIOR_GATHER = "ChaseMouse";
 
 	static {
 		try {
@@ -73,10 +73,9 @@ public class Main {
 		try {
 			getInstance().run();
 		} catch(OutOfMemoryError err) {
-			log.log (Level.SEVERE, "Out of Memory Exception", err);
-			System.out.println("You ran out of memory.  You've probably have too many " +
+			log.log (Level.SEVERE, "Out of Memory Exception.  There are probably have too many " +
 					"mascots in the image folder for your computer to handle.  Move some to the " +
-					"img unused folder and try again.");
+					"img unused folder and try again.", err);
 		}
 	}
 

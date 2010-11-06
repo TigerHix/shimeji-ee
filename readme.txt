@@ -31,6 +31,8 @@ When Shimeji-ee starts, one Shimeji for every image set in the img folder will b
 
 Shimeji-ee will ignore all the image sets that are in the img/unused folder, so you can hide image sets in there.  If enough people want it, a future release may add some better capabilities (namely a image set selection tool when Shimeji-ee is run) to managing Shimeji image sets.
 
+Also, read through the configuration files in conf/.  Most options are somewhat complicated, but it's not too hard to limit the total number of Shimeji or to turn off certain behaviors (hint: set frequency to 0.)
+
 ==== Advanced Configuration ==== 
 
 All configuration files are located in the in the conf folders.  In general, none of these should need to be touched.
@@ -66,3 +68,16 @@ Follow the zlib/libpng licenses.
 
 lib / jna.jar and lib / examples.jar of the JNA library.
 JNA follows the LGPL.
+
+==== Trouble Shooting ====
+
+Shimeji-ee takes a LOT of time to start if you have a lot of image sets, so give it some time.  Try moving all but one image set to the img/unused folder.
+
+If Shimeji is running out of memory, try editing Shimeji-ee.bat and change "-Xmx1000m" to a higher number.
+
+If the Shimeji-ee icon appears, but no Shimeji appear:
+
+1. Make sure you only have image set folders in your img directory.
+2. Make sure you have 32-bit Java on your system.  If you have both 32-bit Java and 64-bit Java installed, try double clicking Shimeji-ee.bat or Shimeji-ee.jar.  Shimeji-ee requires 32-bit Windows DLLs so can not work with 64-bit Java.
+3. If you're somewhat computer savvy, you can try running Shimeji-ee from the command line.  Navigate to the Shimeji-ee directory and run this command: "C:\Program Files (x86)\Java\jre6\bin\java" -classpath Shimeji-ee.jar -Xmx512m com.group_finity.mascot.Main -Djava.util.logging.config.file=./conf/logging.properties
+4. Try checking the log (ShimejiLogX.log) for errors.  If you find a bug (which is very likely), post it up on the Shimeji-ee homepage in the issues section.

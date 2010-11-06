@@ -85,7 +85,7 @@ public class Configuration {
 
 		final ActionBuilder factory = this.actionBuilders.get(name);
 		if (factory == null) {
-			throw new ActionInstantiationException("Find the corresponding action: " + name);
+			throw new ActionInstantiationException("Could not find the corresponding action: " + name);
 		}
 
 		return factory.buildAction(params);

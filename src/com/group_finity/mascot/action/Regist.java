@@ -38,7 +38,7 @@ public class Regist extends ActionBase {
 		if (getTime() + 1 >= getAnimation().getDuration()) {
 			getMascot().setLookRight(Math.random() < 0.5);
 
-			log.log(Level.INFO, "({0},{1})", new Object[] { getMascot(), this });
+			log.log(Level.INFO, "Lost Ground ({0},{1})", new Object[] { getMascot(), this });
 			throw new LostGroundException();
 		}
 
