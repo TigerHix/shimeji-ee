@@ -44,8 +44,8 @@ The behaviors.xml file specifies when Shimeji performs each action.  More detail
 Each type of Shimeji is configured through:
 
 1. An image set.  This is located in img/[NAME].  The image set must contain all image files specified in the actions file. 
-2. An actions file.  Unless conf/[NAME]/actions.xml exists, conf/actions.xml will be used.
-3. A behaviors file.  Unless conf/[NAME]/behaviors.xml exists, conf/behaviors.xml will be used.
+2. An actions file.  Unless img/[NAME]/conf/actions.xml or conf/[NAME]/actions.xml exists, conf/actions.xml will be used.
+3. A behaviors file.  Unless img/[NAME]/conf/behaviors.xml or conf/[NAME]/behaviors.xml exists, conf/behaviors.xml will be used.
 
 When Shimeji-ee starts, one Shimeji for every image set in the img folder will be created.  If you have too many image sets, a lot of your computer's memory will be used... so be careful.  Shimeji-ee can eat up to 60% of your system's free memory.  
 
@@ -77,7 +77,8 @@ If Shimeji is running out of memory, try editing Shimeji-ee.bat and change "-Xmx
 
 If the Shimeji-ee icon appears, but no Shimeji appear:
 
-1. Make sure you only have image set folders in your img directory.
-2. Make sure you have 32-bit Java on your system.  If you have both 32-bit Java and 64-bit Java installed, try double clicking Shimeji-ee.bat or Shimeji-ee.jar.  Shimeji-ee requires 32-bit Windows DLLs so can not work with 64-bit Java.
-3. If you're somewhat computer savvy, you can try running Shimeji-ee from the command line.  Navigate to the Shimeji-ee directory and run this command: "C:\Program Files (x86)\Java\jre6\bin\java" -classpath Shimeji-ee.jar -Xmx512m com.group_finity.mascot.Main -Djava.util.logging.config.file=./conf/logging.properties
-4. Try checking the log (ShimejiLogX.log) for errors.  If you find a bug (which is very likely), post it up on the Shimeji-ee homepage in the issues section.
+1. Make sure you have the newest version of Shimeji-ee.
+2. Make sure you only have image set folders in your img directory.
+3. Make sure you have 32-bit Java on your system.  If you have both 32-bit Java and 64-bit Java installed, try double clicking Shimeji-ee.bat or Shimeji-ee.jar.  Shimeji-ee requires 32-bit Windows DLLs so can not work with 64-bit Java.
+4. If you're somewhat computer savvy, you can try running Shimeji-ee from the command line.  Navigate to the Shimeji-ee directory and run this command: "C:\Program Files (x86)\Java\jre6\bin\java" -classpath Shimeji-ee.jar -Xmx512m com.group_finity.mascot.Main -Djava.util.logging.config.file=./conf/logging.properties
+5. Try checking the log (ShimejiLogX.log) for errors.  If you find a bug (which is very likely), post it up on the Shimeji-ee homepage in the issues section.

@@ -116,9 +116,11 @@ public class Main {
 			String actionsFile = "./conf/actions.xml";		
 			if( new File("./conf/"+imageSet+"/actions.xml").exists() ) {	
 				actionsFile = "./conf/"+imageSet+"/actions.xml";				
-			}					
+			} else if( new File("./img/"+imageSet+"/conf/actions.xml").exists() ) {
+				actionsFile = "./img/"+imageSet+"/conf/actions.xml";
+			}				
 			
-			log.log(Level.INFO, "Read Action File ((0))", actionsFile);
+			log.log(Level.INFO, imageSet+" Read Action File ({0})", actionsFile);
 			
 			final Document actions = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(
 					new FileInputStream( new File(actionsFile)));
@@ -130,9 +132,11 @@ public class Main {
 			String behaviorsFile = "./conf/behaviors.xml";			
 			if( new File("./conf/"+imageSet+"/behaviors.xml").exists() ) {	
 				behaviorsFile = "./conf/"+imageSet+"/behaviors.xml";				
-			}				
+			} else if( new File("./img/"+imageSet+"/conf/behaviors.xml").exists() ) {
+				behaviorsFile = "./img/"+imageSet+"/conf/behaviors.xml";
+			}
 			
-			log.log(Level.INFO, "Read Behavior File ((0))", behaviorsFile);			
+			log.log(Level.INFO, imageSet+" Read Behavior File ({0})", behaviorsFile);			
 			
 			final Document behaviors = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(
 					new FileInputStream( new File(behaviorsFile) ) );
@@ -274,6 +278,9 @@ public class Main {
 			mascot.dispose();
 		} catch (final CantBeAliveException e) {
 			log.log (Level.SEVERE, "Fatal Error", e);
+			mascot.dispose();
+		} catch ( Exception e ) {
+			log.log (Level.SEVERE, imageSet + " fatal error, can not be started.", e);
 			mascot.dispose();
 		}
 	}
