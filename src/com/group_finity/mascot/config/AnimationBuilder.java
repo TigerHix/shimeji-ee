@@ -61,7 +61,7 @@ public class AnimationBuilder {
 			image = ImagePairLoader.load(imageText, anchor);
 		} catch( Exception e ) {
 			log.log(Level.SEVERE, "Failed to load image: "+imageText);
-			Main.getInstance().exit();
+			throw new IOException( "Failed to load image: "+imageText );
 		}
 
 		final String[] moveCoordinates = moveText.split(",");

@@ -131,6 +131,7 @@ public class Mascot {
 				getBehavior().mousePressed(event);
 			} catch (final CantBeAliveException e) {
 				log.log(Level.SEVERE, "Fatal Error", e);
+				Main.showError( "Severe Shimeji Error.\nSee log for more details." );					
 				dispose();
 			}
 		}
@@ -152,6 +153,7 @@ public class Mascot {
 					getBehavior().mouseReleased(event);
 				} catch (final CantBeAliveException e) {
 					log.log(Level.SEVERE, "Fatal Error", e);
+					Main.showError( "Severe Shimeji Error.\nSee log for more details." );					
 					dispose();
 				}
 			}
@@ -243,6 +245,7 @@ public class Mascot {
 						setBehavior(Main.getInstance().getConfiguration(getImageSet()).buildBehavior(command));
 					} catch( Exception err ) {
 						log.log(Level.SEVERE, "Error ({0})", this);
+						Main.showError( "Could not set behavior.\nSee log for more details." );						
 					}					
 				}
 			});
@@ -275,6 +278,7 @@ public class Mascot {
 					getBehavior().next();
 				} catch (final CantBeAliveException e) {
 					log.log(Level.SEVERE, "Fatal Error.", e);
+					Main.showError( "Could not get next behavior.\nSee log for more details." );					
 					dispose();
 				}
 

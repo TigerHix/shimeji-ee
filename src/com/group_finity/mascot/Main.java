@@ -21,6 +21,8 @@ import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -57,17 +59,24 @@ public class Main {
 		}
 	}
 
+	private final Manager manager = new Manager();
+
+	private ArrayList<String> imageSets = new ArrayList<String>();	
+	
+	private Hashtable<String,Configuration> configurations = new Hashtable<String,Configuration>();	
+	
 	private static Main instance = new Main();
 
 	public static Main getInstance() {
 		return instance;
 	}
 
-	private final Manager manager = new Manager();
-
-	private ArrayList<String> imageSets = new ArrayList<String>();	
+	private static JFrame frame = new javax.swing.JFrame();
 	
-	private Hashtable<String,Configuration> configurations = new Hashtable<String,Configuration>();
+	public static void showError( String message ) {
+        JOptionPane.showMessageDialog(frame, message,
+                "Error",JOptionPane.ERROR_MESSAGE);		
+	}	
 	
 	public static void main(final String[] args) {
 		try {
@@ -76,11 +85,13 @@ public class Main {
 			log.log (Level.SEVERE, "Out of Memory Exception.  There are probably have too many " +
 					"mascots in the image folder for your computer to handle.  Move some to the " +
 					"img unused folder and try again.", err);
+			Main.showError( "Out of Memory.  There are probably have too many \n" +
+					"mascots in the image folder for your computer to handle.\n" +
+					"Move some to the img unused folder and try again.");
 		}
 	}
 
-	public void run() {
-		
+	public void run() {		
 		// Get list of imagesets (directories under img)
 		File dir = new File("./img");
 		FilenameFilter fileFilter = new FilenameFilter() {
@@ -149,17 +160,25 @@ public class Main {
 			
 		} catch (final IOException e) {
 			log.log (Level.SEVERE, "Failed to load configuration files", e);
+			Main.showError( "Failed to load configuration files.\nSee log for more details." );
 			exit();
 		} catch (final SAXException e) {
 			log.log (Level.SEVERE, "Failed to load configuration files", e);
+			Main.showError( "Failed to load configuration files.\nSee log for more details." );			
 			exit();
 		} catch (final ParserConfigurationException e) {
 			log.log (Level.SEVERE, "Failed to load configuration files", e);
+			Main.showError( "Failed to load configuration files.\nSee log for more details." );			
 			exit();
 		} catch (final ConfigurationException e) {
 			log.log (Level.SEVERE, "Failed to load configuration files", e);
+			Main.showError( "Failed to load configuration files.\nSee log for more details." );			
 			exit();
-		}
+		} catch (final Exception e) {
+			log.log (Level.SEVERE, "Failed to load configuration files", e);
+			Main.showError( "Failed to load configuration files.\nSee log for more details." );			
+			exit();
+		}		
 	}
 
 	/**
@@ -239,10 +258,11 @@ public class Main {
 
 		} catch (final IOException e) {
 			log.log(Level.SEVERE, "Failed to create tray icon", e);
+			Main.showError( "Failed to display system tray.\nSee log for more details." );			
 			exit();
-
 		} catch (final AWTException e) {
 			log.log(Level.SEVERE, "Failed to create tray icon", e);
+			Main.showError( "Failed to display system tray.\nSee log for more details." );
 			getManager().setExitOnLastRemoved(true);
 		}
 
@@ -275,12 +295,15 @@ public class Main {
 			this.getManager().add(mascot);
 		} catch (final BehaviorInstantiationException e) {
 			log.log (Level.SEVERE, "Failed to initialize the first action", e);
+			Main.showError( "Failed to initialize first action.\nSee log for more details." );						
 			mascot.dispose();
 		} catch (final CantBeAliveException e) {
 			log.log (Level.SEVERE, "Fatal Error", e);
+			Main.showError( "Failed to initialize first action.\nSee log for more details." );									
 			mascot.dispose();
 		} catch ( Exception e ) {
 			log.log (Level.SEVERE, imageSet + " fatal error, can not be started.", e);
+			Main.showError( "Could not create "+imageSet+".\nSee log for more details." );									
 			mascot.dispose();
 		}
 	}

@@ -183,9 +183,11 @@ public class Manager {
 					mascot.setBehavior(Main.getInstance().getConfiguration(mascot.getImageSet()).buildBehavior(name));
 				} catch (final BehaviorInstantiationException e) {
 					log.log(Level.SEVERE, "Failed to initialize the following actions", e);
+					Main.showError( "Failed to set behavior.\nSee log for more details." );											
 					mascot.dispose();
 				} catch (final CantBeAliveException e) {
 					log.log(Level.SEVERE, "Fatal Error", e);
+					Main.showError( "Failed to set behavior.\nSee log for more details." );						
 					mascot.dispose();
 				}
 			}
@@ -201,9 +203,11 @@ public class Manager {
 					}
 				} catch (final BehaviorInstantiationException e) {
 					log.log(Level.SEVERE, "Failed to initialize the following actions", e);
+					Main.showError( "Failed to set behavior.\nSee log for more details." );						
 					mascot.dispose();
 				} catch (final CantBeAliveException e) {
 					log.log(Level.SEVERE, "Fatal Error", e);
+					Main.showError( "Failed to set behavior.\nSee log for more details." );						
 					mascot.dispose();
 				}
 			}

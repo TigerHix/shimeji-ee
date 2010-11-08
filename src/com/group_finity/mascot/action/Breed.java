@@ -70,9 +70,11 @@ public class Breed extends Animate {
 		
 		} catch (final BehaviorInstantiationException e) {
 			log.log(Level.SEVERE, "Fatal Exception", e);
+			Main.showError( "Failed to create new Shimeji.\nSee log for more details." );
 			mascot.dispose();
 		} catch (final CantBeAliveException e) {
 			log.log(Level.SEVERE, "Fatal Exception", e);
+			Main.showError( "Failed to create new Shimeji.\nSee log for more details." );
 			mascot.dispose();
 		}
 	}

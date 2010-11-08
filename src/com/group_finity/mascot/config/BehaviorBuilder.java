@@ -100,6 +100,7 @@ public class BehaviorBuilder {
 	public void validate() throws ConfigurationException {
 		
 		if ( !getConfiguration().getActionBuilders().containsKey(getActionName()) ) {
+			log.log(Level.SEVERE, "There is no corresponding action(" + this + ")");			
 			throw new ConfigurationException("There is no corresponding action("+this+")");
 		}
 	}
@@ -111,6 +112,7 @@ public class BehaviorBuilder {
 						getConfiguration().buildAction(getActionName(), 
 								getParams()), getConfiguration() );
 		} catch (final ActionInstantiationException e) {
+			log.log(Level.SEVERE, "Failed to initialize the corresponding action("+this+")");				
 			throw new BehaviorInstantiationException("Failed to initialize the corresponding action("+this+")", e);
 		}
 	}
