@@ -35,6 +35,7 @@ import com.group_finity.mascot.config.Entry;
 import com.group_finity.mascot.exception.BehaviorInstantiationException;
 import com.group_finity.mascot.exception.CantBeAliveException;
 import com.group_finity.mascot.exception.ConfigurationException;
+import com.group_finity.mascot.imagesetchooser.ImageSetChooser;
 
 /**
  * Program entry point.
@@ -83,27 +84,20 @@ public class Main {
 			getInstance().run();
 		} catch(OutOfMemoryError err) {
 			log.log (Level.SEVERE, "Out of Memory Exception.  There are probably have too many " +
-					"mascots in the image folder for your computer to handle.  Move some to the " +
-					"img unused folder and try again.", err);
+					"Shimeji mascots in the image folder for your computer to handle.  Select fewer" +
+					" image sets or move some to the img/unused folder and try again.", err);
 			Main.showError( "Out of Memory.  There are probably have too many \n" +
-					"mascots in the image folder for your computer to handle.\n" +
-					"Move some to the img unused folder and try again.");
+					"Shimeji mascots for your computer to handle.\n" +
+					"Select fewer image sets or move some to the \n" +
+					"img/unused folder and try again.");
+			System.exit(0);
 		}
 	}
 
-	public void run() {		
-		// Get list of imagesets (directories under img)
-		File dir = new File("./img");
-		FilenameFilter fileFilter = new FilenameFilter() {
-		    public boolean accept(File dir, String name) {
-		    	if( name.equals("unused") || name.equals(".svn") ) return false;
-		    	return new File(dir+"/"+name).isDirectory(); 
-		    }
-		};
-		String[] children = dir.list(fileFilter);	
-		for ( String directory : children ) { 
-			imageSets.add(directory);
-		}
+	public void run() {	
+	
+		// Get the image sets to use
+		imageSets = new ImageSetChooser(frame,true).display();
 		
 		// Load settings
 		for( String imageSet : imageSets ) {
