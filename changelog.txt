@@ -1,3 +1,8 @@
+=== Shimeji-ee 1.0.3 ===
+
+- Decreased memory usage significantly.
+
+
 === Shimeji-ee 1.0.2 ===
 
 - Added Image Set Chooser, which allows the user to select which image sets to use when Shimeji-ee starts.

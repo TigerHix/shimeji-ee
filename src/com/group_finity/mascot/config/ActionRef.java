@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.group_finity.mascot.Main;
 import com.group_finity.mascot.action.Action;
 import com.group_finity.mascot.exception.ActionInstantiationException;
 import com.group_finity.mascot.exception.ConfigurationException;

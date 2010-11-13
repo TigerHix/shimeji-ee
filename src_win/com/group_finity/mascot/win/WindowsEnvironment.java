@@ -5,24 +5,12 @@ import java.awt.Rectangle;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
-import java.awt.GraphicsConfiguration;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
-import java.awt.MouseInfo;
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.Toolkit;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-
 import com.group_finity.mascot.environment.Area;
 import com.group_finity.mascot.environment.Environment;
-import com.group_finity.mascot.environment.Location;
 import com.group_finity.mascot.win.jna.Gdi32;
 import com.group_finity.mascot.win.jna.RECT;
 import com.group_finity.mascot.win.jna.User32;
 import com.sun.jna.Pointer;
-import com.sun.jna.ptr.PointerByReference;
 
 /**
  * Original Author: Yuki Yamada of Group Finity (http://www.group-finity.com/Shimeji/)

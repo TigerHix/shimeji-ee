@@ -31,7 +31,6 @@ public class JLongMenu extends JMenu {
     
     public JLongMenu(String label, int maxitems) {
         super(label);
-        JMenuItem getHeightMenu = new JMenuItem("Temporary");
         this.maxItems = maxitems;
         // leave one for the "more" menu and one for the windows task bar.
     }    

@@ -15,11 +15,14 @@ public class ImagePairLoader {
 
 	/**
 	 */
-	public static ImagePair load(final String name, final Point center) throws IOException {
+	public static void load(final String name, final Point center) throws IOException {
+			if( ImagePairs.contains(name) ) return;
+
 			final BufferedImage leftImage = ImageIO.read(ImagePairLoader.class.getResource(name));
 			final BufferedImage rightImage = flip(leftImage);
-			return new ImagePair(new MascotImage(leftImage, center), 
+			ImagePair ip = new ImagePair(new MascotImage(leftImage, center), 
 					new MascotImage(rightImage, new Point(rightImage.getWidth() - center.x, center.y)));
+			ImagePairs.load( name, ip );
 	}
 
 	/**

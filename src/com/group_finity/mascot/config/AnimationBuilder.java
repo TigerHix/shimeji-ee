@@ -7,12 +7,10 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.group_finity.mascot.Main;
 import com.group_finity.mascot.animation.Animation;
 import com.group_finity.mascot.animation.Pose;
 import com.group_finity.mascot.exception.AnimationInstantiationException;
 import com.group_finity.mascot.exception.VariableException;
-import com.group_finity.mascot.image.ImagePair;
 import com.group_finity.mascot.image.ImagePairLoader;
 import com.group_finity.mascot.script.Variable;
 
@@ -56,9 +54,8 @@ public class AnimationBuilder {
 		final String[] anchorCoordinates = anchorText.split(",");
 		final Point anchor = new Point(Integer.parseInt(anchorCoordinates[0]), Integer.parseInt(anchorCoordinates[1]));
 
-		ImagePair image = null;
 		try {
-			image = ImagePairLoader.load(imageText, anchor);
+			ImagePairLoader.load(imageText, anchor);
 		} catch( Exception e ) {
 			log.log(Level.SEVERE, "Failed to load image: "+imageText);
 			throw new IOException( "Failed to load image: "+imageText );
@@ -69,7 +66,7 @@ public class AnimationBuilder {
 
 		final int duration = Integer.parseInt(durationText);
 
-		final Pose pose = new Pose(image, move.x, move.y, duration);
+		final Pose pose = new Pose(imageText, move.x, move.y, duration);
 		
 		log.log(Level.INFO, "ReadPosition({0})", pose);
 		

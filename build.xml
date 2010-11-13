@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-31J" ?>
 <project name="Shimeji-ee" basedir="." default="zip">
 
-	<property name="version" value="1.0.2" />
+	<property name="version" value="1.0.3" />
 
 	<target name="clean">
 		<delete dir="target" />
@@ -40,13 +40,13 @@
 		</zip>
 
 		<ant target="zip_package">
-			<property name="edition" value="Personal" />
+			<property name="edition" value="Calm" />
 		</ant>
 		<ant target="zip_package">
 			<property name="edition" value="Professional" />
 		</ant>
 		<ant target="zip_package">
-			<property name="edition" value="Ultimate" />
+			<property name="edition" value="Mischievous" />
 		</ant>
 	</target>
 

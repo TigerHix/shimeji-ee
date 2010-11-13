@@ -1,7 +1,6 @@
 package com.group_finity.mascot.action;
 
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.group_finity.mascot.animation.Animation;
