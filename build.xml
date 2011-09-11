@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-31J" ?>
 <project name="Shimeji-ee" basedir="." default="zip">
 
-	<property name="version" value="1.0.3" />
+	<property name="version" value="1.0.4" />
 
 	<target name="clean">
 		<delete dir="target" />
@@ -73,6 +73,7 @@
 				<include name="originalreadme.txt"/>
 				<include name="readme.txt"/>		
 				<include name="changelog.txt"/>
+				<include name="windows.txt"/>
 				<include name="img/**/*" />
 				<include name="conf/**/*" />
 				<exclude name="conf/behaviors.xml" />

@@ -4,7 +4,10 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.io.*;
+import java.util.logging.Level;
 
+import com.group_finity.mascot.Main;
 import com.group_finity.mascot.environment.Area;
 import com.group_finity.mascot.environment.Environment;
 import com.group_finity.mascot.win.jna.Gdi32;
@@ -38,30 +41,33 @@ class WindowsEnvironment extends Environment {
 
 		final int titleLength = User32.INSTANCE.GetWindowTextW(ie, title, 1024);
 
-		if (new String(title, 0, titleLength).contains("Internet Explorer")) {
+                try {
+                    BufferedReader br = new BufferedReader(new FileReader("windows.txt"));
+                    String window;
+                    while ((window = br.readLine()) != null) {
+                        if (new String(title, 0, titleLength).contains(window)) {
 			ieCache.put(ie, true);
 			return true;
-		}
-
-		if (new String(title, 0, titleLength).contains("Google Chrome")) {
-			ieCache.put(ie, true);
-			return true;
-		}
-
-		if (new String(title, 0, titleLength).contains("Mozilla Firefox")) {
-			ieCache.put(ie, true);
-			return true;
-		}
-
+                        }
+                    }
+                   br.close();
+                }  
+                catch(FileNotFoundException e){
+                    Main.showError( "windows.txt not found" );
+                }
+                catch(IOException e){
+                    Main.showError("IOException.");
+                }
+                
 		final char[] className = new char[1024];
 
 		final int classNameLength = User32.INSTANCE.GetClassNameW(ie, className, 1024);
-
-		if (new String(className, 0, classNameLength).contains("IMWindowClass")) {
+                
+                if (new String(className, 0, classNameLength).contains("IMWindowClass")) {
 			ieCache.put(ie, true);
 			return true;
 		}
-
+                
 		ieCache.put(ie, false);
 		return false;
 	}
